@@ -41,20 +41,27 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #own
+    # own
+    'app',
     'rest_framework',
     
-    #for swagger
-    'drf_yasg',
-    
-    #db
+    # db
     'psycopg2',
     
-    #cors policy 
+    # cors policy 
     "corsheaders",
     
-    #https
+    # https
     "django_extensions",
+    
+    # registration
+    'rest_framework_simplejwt',
+    
+    # search
+    'django_filters',
+    
+    # swagger 
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -67,6 +74,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -192,3 +201,11 @@ CORS_ALLOW_HEADERS = (
     "x-csrftoken",
     "x-requested-with",
 )
+
+SWAGGER_SETTINGS = {
+    
+    'VALIDATOR_URL': 'http://localhost:8000',
+    
+}
+
+
