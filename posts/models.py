@@ -1,6 +1,9 @@
-# need to add status
 from django.db import models
+
+# need to add status
+
 from django.contrib.auth.models import AbstractUser
+
 
 
 class Account(models.Model):
@@ -9,24 +12,29 @@ class Account(models.Model):
         verbose_name='Заголовок'
     )
     
+    
 class Posts(models.Model):
     
-    class status_choices(models.TextChoices):
-        request_1 = "Ожидание подтверждения"
-        request_2 = "Запрос принят"
-        request_3 = "Детали обмена согласованы"
-        request_4 = "Обмен завершен"
-        request_5 = "Отклонен"
-        request_6 = "Отменен"
+    # class status_choices(models.TextChoices):
         
-#__________________________________________
+    type_of_status = [
+        ("Ожидание подтверждения" , "Ожидание подтверждения"),
+        ("Запрос принят" , "Запрос принят"),
+        ("Детали обмена согласованы" , "Детали обмена согласованы"),
+        ("Обмен завершен" , "Обмен завершен"),
+        ("Отклонен" , "Отклонен"),
+        ("Отменен" , "Отменен"),
+    ]
+        
+    #__________________________________________
 
-    profile = models.ForeignKey(
-        Account,
-        on_delete=models.CASCADE,
-        related_name='posts',
-        verbose_name='Профиль'
-    )
+
+    # profile = models.ForeignKey(
+    #     Account,
+    #     on_delete=models.CASCADE,
+    #     related_name='posts',
+    #     verbose_name='Профиль'
+    # )
     title = models.CharField(
         max_length=50,
         verbose_name='Заголовок'
@@ -44,7 +52,8 @@ class Posts(models.Model):
         verbose_name='Описание'
     )
     status = models.CharField(
-        choices=status_choices
+        choices=type_of_status,
+        default=1
     )
     create_date = models.DateTimeField(
         auto_now_add=True
@@ -52,13 +61,12 @@ class Posts(models.Model):
     update_date = models.DateTimeField(
         auto_now=True
     )
-    
-    
-    
+ 
     def __str__(self):
-        return f"{self.profile}"
+        return f"{self.title}"
     
     class Meta:
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'
         
+

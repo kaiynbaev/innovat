@@ -5,5 +5,5 @@ from .models import Posts
 class PostsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Posts    
-        fields = ['profile', 'title', 'image', 'genre', 'description', 'status'] # need to add status
+        fields = ['title', 'image', 'genre', 'description', 'status'] # need to add profile
 

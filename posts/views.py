@@ -11,6 +11,10 @@ class PostsViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = (r_filters.SearchFilter,)
     serializer_class = PostsSerializer
-    filterset_fields = ('Account__username',)
+    # filterset_fields = ('Account__username',)
     search_fields = ('Posts__title',)
+    
+    
+    
+
     
