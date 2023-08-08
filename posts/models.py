@@ -2,7 +2,6 @@ from django.db import models
 
 # need to add status
 
-from django.contrib.auth.models import AbstractUser
 
 
 
@@ -52,6 +51,7 @@ class Posts(models.Model):
         verbose_name='Описание'
     )
     status = models.CharField(
+        max_length=500,
         choices=type_of_status,
         default=1
     )

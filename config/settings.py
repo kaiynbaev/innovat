@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # own
-    'posts.apps.PostsConfig',
+    #'posts.apps.PostsConfig',
+    'posts',
     'rest_framework',
     
     # db
