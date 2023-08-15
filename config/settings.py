@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-8yy52@kbbqh(%m+#g$5q605jf2&yydy(&1b&_=%f#51mdvu#57
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -131,6 +131,8 @@ DATABASES = {
         "PORT": 5432,  # default postgres port
     }
 }
+
+
 
 
 # Password validation
@@ -242,13 +244,18 @@ REST_FRAMEWORK = {
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'auth/users/reset_password_confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'auth/users/reset_username_confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'accounts/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'auth/accounts/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
 }
 
-EMAIL_USE_TLS = True
+
+#smtp server 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'djangosc876@gmail.com'
-EMAIL_HOST_PASSWORD = 'F00dz!#0'
+EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+# EMAIL_USE_SSL = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
