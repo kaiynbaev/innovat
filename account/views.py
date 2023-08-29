@@ -1,6 +1,9 @@
+
+from django.shortcuts import render
 from djoser.views import UserViewSet
 from rest_framework.response import Response
 from rest_framework import status
+
 
 class ActivateUser(UserViewSet):
     def get_serializer(self, *args, **kwargs):
