@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Posts
+from .models import Posts, PostExchange
 
 class ModelPosts(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('id', 'title',)
 
-admin.site.register(Posts)
+admin.site.register(Posts, ModelPosts)
+admin.site.register(PostExchange)

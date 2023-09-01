@@ -5,24 +5,11 @@ from account.models import UserModel
 
 class Posts(models.Model):
     
-    # class status_choices(models.TextChoices):
-        
-    type_of_status = [
-        ("Ожидание подтверждения" , "Ожидание подтверждения"),
-        ("Запрос принят" , "Запрос принят"),
-        ("Детали обмена согласованы" , "Детали обмена согласованы"),
-        ("Обмен завершен" , "Обмен завершен"),
-        ("Отклонен" , "Отклонен"),
-        ("Отменен" , "Отменен"),
-    ]
-        
-    #__________________________________________
     UserProfile = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
         verbose_name='Пользователь',
         related_name='UserProfile',
-        null=False
     )
     title = models.CharField(
         max_length=50,
@@ -45,11 +32,6 @@ class Posts(models.Model):
         verbose_name='Автор книги',
         null=True
     )
-    status = models.CharField(
-        max_length=500,
-        choices=type_of_status,
-        default=1
-    )
     create_date = models.DateTimeField(
         auto_now_add=True
     )
@@ -57,6 +39,7 @@ class Posts(models.Model):
         auto_now=True
     )
     REQUIRED_FIELDS = ['title', 'genre', 'description', 'author']
+    
     def __str__(self):
         return f"{self.title}"
    
@@ -76,3 +59,69 @@ class Posts(models.Model):
         verbose_name_plural = 'Книги'
         
 
+
+class PostExchange(models.Model):
+    
+    type_of_status = [
+        ("Ожидание подтверждения" , "Ожидание подтверждения"),
+        ("Запрос принят" , "Запрос принят"),
+        ("Детали обмена согласованы" , "Детали обмена согласованы"),
+        ("Обмен завершен" , "Обмен завершен"),
+        ("Отклонен" , "Отклонен"),
+        ("Отменен" , "Отменен"),
+    ]
+    
+    #_______________________________________________________________
+    
+    
+    sender = models.ForeignKey(
+        UserModel, 
+        on_delete=models.CASCADE, 
+        related_name='exchanges_sent',
+        verbose_name='Отправитель'
+        )
+    receiver = models.ForeignKey(
+        UserModel, 
+        on_delete=models.CASCADE, 
+        related_name='exchanges_received',
+        verbose_name='Получатель'
+        )
+    post_offered = models.ForeignKey(
+        Posts, 
+        on_delete=models.CASCADE,
+        verbose_name='Предлагается'
+        )
+    post_requested = models.ForeignKey(
+        Posts, 
+        on_delete=models.CASCADE, 
+        related_name='exchanges_received',
+        verbose_name='Запрашивается'
+        )
+    status = models.CharField(
+        max_length=500,
+        choices=type_of_status,
+        default=1,
+        verbose_name='Cтатус'   
+    )
+    create_date = models.DateTimeField(
+        auto_now_add=True
+    )
+    update_date = models.DateTimeField(
+        auto_now=True
+    )
+    REQUIRED_FIELDS = ['sender', 'receiver', 'post_offered', 'post_requested']
+
+    class Meta:
+        verbose_name = 'Запрос на обмен'
+        verbose_name_plural = 'Запросы на обмен'
+        
+    def update_status(self, new_status):
+        if new_status in self.type_of_status.keys():
+            self.status = new_status
+            self.save()
+            return self.status
+        else:
+            return f'Нет такого типа статуса'    
+        
+    def __str__(self) -> str:
+        return f'{self.sender} -> {self.receiver}'

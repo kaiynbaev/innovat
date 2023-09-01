@@ -22,8 +22,8 @@ class UserModel(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_number', 'city_address']
     
     class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
     def __str__(self):
         return self.email
